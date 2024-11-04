@@ -5,6 +5,7 @@ from typing import Union
 
 from sqlalchemy.engine.url import URL
 
+SQLALCHEMY_DATABASE_URI = postgresql://ktf_db_user:KqQTh44hIhf88WEqqknaBzcn15DA6XLB@dpg-csj3pku8ii6s73cuq73g-a/ktf_db # type: ignore
 
 class EnvInterpolation(configparser.BasicInterpolation):
     """Interpolation which expands environment variables in values."""
@@ -122,7 +123,7 @@ class ServerConfig(object):
         CACHE_REDIS_URL += f"@{REDIS_HOST}:{REDIS_PORT}/{REDIS_DB}"
 
 SQLALCHEMY_DATABASE_URI = os.getenv('postgresql://ktf_db_user:KqQTh44hIhf88WEqqknaBzcn15DA6XLB@dpg-csj3pku8ii6s73cuq73g-a/ktf_db')
-    if CACHE_REDIS_URL:
+    if CACHE_REDIS_URL: # type: ignore
         CACHE_TYPE: str = "redis"
     else:
         CACHE_TYPE: str = "filesystem"
@@ -258,13 +259,13 @@ SQLALCHEMY_DATABASE_URI = os.getenv('postgresql://ktf_db_user:KqQTh44hIhf88WEqqk
 # fmt: on
 
 
-class TestingConfig(ServerConfig):
+class TestingConfig(ServerConfig):  # type: ignore
     SECRET_KEY = "AAAAAAAAAAAAAAAAAAAA"
     PRESERVE_CONTEXT_ON_EXCEPTION = False
     TESTING = True
     DEBUG = True
 SQLALCHEMY_DATABASE_URI = os.getenv('postgresql://ktf_db_user:KqQTh44hIhf88WEqqknaBzcn15DA6XLB@dpg-csj3pku8ii6s73cuq73g-a/ktf_db')
-    MAIL_SERVER = os.getenv("TESTING_MAIL_SERVER")
+    MAIL_SERVER = os.getenv("TESTING_MAIL_SERVER")  # type: ignore
     SERVER_NAME = "localhost"
     UPDATE_CHECK = False
     REDIS_URL = None
@@ -274,7 +275,7 @@ SQLALCHEMY_DATABASE_URI = os.getenv('postgresql://ktf_db_user:KqQTh44hIhf88WEqqk
 
 
 # Actually initialize ServerConfig to allow us to add more attributes on
-Config = ServerConfig()
+Config = ServerConfig()     # type: ignore
 for k, v in config_ini.items("extra"):
     # We should only add the values that are not yet loaded in ServerConfig.
     if hasattr(Config, k):
