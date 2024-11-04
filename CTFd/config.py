@@ -5,7 +5,6 @@ from typing import Union
 
 from sqlalchemy.engine.url import URL
 
-SQLALCHEMY_DATABASE_URI = postgresql://ktf_db_user:KqQTh44hIhf88WEqqknaBzcn15DA6XLB@dpg-csj3pku8ii6s73cuq73g-a/ktf_db
 
 class EnvInterpolation(configparser.BasicInterpolation):
     """Interpolation which expands environment variables in values."""
